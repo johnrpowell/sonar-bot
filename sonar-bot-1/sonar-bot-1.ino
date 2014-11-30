@@ -9,6 +9,9 @@ Servo servo;
 Maxbotix rangeSensorAD(A0, Maxbotix::AN, Maxbotix::LV, Maxbotix::BEST, 9);
 int pos = 0;
 int i = 0;
+int targetPos = 0;
+float highestVal = 0;
+float currentVal = 0;
 float scanReadings[17];
 
 void setup()
@@ -37,16 +40,28 @@ void sensorSweep()
   setColor(254,203,0);
   for(pos = 0; pos < 160; pos += 10) 
   {                               
+    currentVal = rangeSensorAD.getRange();
     servo.write(pos);
-    scanReadings[i] = rangeSensorAD.getRange();
+    if (currentVal > highestVal) 
+    { 
+      highestVal = currentVal;
+      targetPos = i;
+    }
+    scanReadings[i] = currentVal;
     i++;
     delay(100);
   }
-  i = 0;
-  servo.write(0);
-  pos = 0;
+  
+  Serial.println(highestVal);
+  Serial.println(targetPos);
   printArray(scanReadings, 15);
   Serial.println(" ");
+  
+  i = 0;
+  highestVal = 0;
+  pos = 0;
+  servo.write(0);
+  
   setColor(0,255,0);
 }
 
