@@ -28,6 +28,13 @@ void setup()
 
 void loop()
 { 
+  sensorSweep();
+  delay(3000);
+}
+
+void sensorSweep()
+{
+  setColor(254,203,0);
   for(pos = 0; pos < 160; pos += 10) 
   {                               
     servo.write(pos);
@@ -40,7 +47,7 @@ void loop()
   pos = 0;
   printArray(scanReadings, 15);
   Serial.println(" ");
-  delay(3000);
+  setColor(0,255,0);
 }
 
 void setColor(int red, int green, int blue)
