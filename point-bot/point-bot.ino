@@ -13,12 +13,28 @@ void setup()
 
 void loop()
 {
+  turnBot(8);
+  delay(3000);
+  turnBot(9);
+  delay(3000);
   turnBot(10);
+  delay(3000);
+  turnBot(11);
+  delay(3000);
+  turnBot(12);
+  delay(3000);
 }
 
 void turnBot(int d)
 {
-  if (d > 8) { motor.pivot(-turnSpd); }
-  else { motor.pivot(turnSpd); }
+  if (d > 7)
+  {
+    motor.pivot(-turnSpd);
+  }
+  else
+  {
+    motor.pivot(turnSpd);
+  }
   delay(pivotDelays[d]);
+  motor.brake();
 }
